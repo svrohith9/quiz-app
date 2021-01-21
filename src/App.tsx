@@ -5,7 +5,7 @@ import Question from './components/Questions';
 
 const TOTAL_QUESTIONS = 10;
 
-type AnswerObj = {
+export type AnswerObj = {
   question: string;
   answer: string;
   correct: boolean;
@@ -20,42 +20,71 @@ const App = () => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-  console.log(fetchQuizData(TOTAL_QUESTIONS, DIFFICULTY.MEDIUM));
+
   const startQuiz = async () => {
     setLoading(true);
     setGameOver(false);
-    //    const newQuestions = await fetchQuizData(TOTAL_QUESTIONS, DIFFICULTY.MEDIUM);
-    //    setQuestions(newQuestions);
+    const newQuestions = await fetchQuizData(TOTAL_QUESTIONS, DIFFICULTY.MEDIUM);
+    setQuestions(newQuestions);
     setScore(0);
     setUserAnswers([]);
     setNumber(0);
     setLoading(false);
+    // console.log(newQuestions);
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!gameOver) {
+      const answer = e.currentTarget.value;
+      const correct = questions[number].correct_answer === answer;
+      if (correct) setScore(prev => prev + 1);
 
+      const answerObj = {
+        question: questions[number].question,
+        answer,
+        correct,
+        correctAnswer: questions[number].correct_answer,
+      }
+      setUserAnswers((prev) => [...prev, answerObj])
+    }
   };
 
   const nextQuestion = () => {
+
+    const nextQuestion = number + 1;
+    if (nextQuestion === TOTAL_QUESTIONS) {
+      setGameOver(true);
+    }
+    else {
+      setNumber(number + 1)
+    }
 
   };
 
   return (
     <div className='App'>
       <h1>Quiz</h1>
-      <button className="start" onClick={startQuiz}>start</button>
-      <p className="score">Score :-</p>
-      <p>Loading ...</p>
-      {/* <Question
-        questonNumber={number + 1}
+      {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+        <button className="start" onClick={startQuiz}>
+          start
+        </button>
+      ) : null}
+      {/* start of quiz */}
+      {!gameOver ? <p className="score">Score :-</p> : null}
+      {loading ? <p>Loading ...</p> : null}
+      {!loading && !gameOver && (< Question
+        questionNumber={number + 1}
         totalQuestions={TOTAL_QUESTIONS}
         question={questions[number].question}
-        answer={questions[number].answers}
+        answers={questions[number].answers}
         userAnswer={userAnswers ? userAnswers[number] : undefined}
         callback={checkAnswer}
-      /> */}
-      <button className='next' onClick={nextQuestion}>Next</button>
-    </div>
+      />)}
+      {!gameOver && !loading && userAnswers.length === number + 1
+        && number !== TOTAL_QUESTIONS - 1 ? (
+          < button className='next' onClick={nextQuestion}>Next</button>
+        ) : null}
+    </div >
   );
 }
 export default App;

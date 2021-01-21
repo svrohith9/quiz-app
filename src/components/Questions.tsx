@@ -2,24 +2,25 @@ import React from 'react';
 
 type Props = {
     question: string;
-    answer: string[];
+    answers: string[];
     callback: any;
     userAnswer: any;
-    questonNumber: number;
+    questionNumber: number;
     totalQuestions: number;
 }
 const Question: React.FC<Props> = (
     {
-        question, answer, callback, userAnswer, questonNumber, totalQuestions }) => (
+        question, answers, callback, userAnswer, questionNumber, totalQuestions }) => (
     <div>
         <p className='number'>
-            Question: {questonNumber}/{totalQuestions}
+            Question: {questionNumber}/{totalQuestions}
         </p>
         <p dangerouslySetInnerHTML={{ __html: question }} />
+        {/* {console.log(question, answers, callback, userAnswer, questionNumber, totalQuestions)} */}
         <div>
-            {answer.map(answer => (
-                <div>
-                    <button disabled={userAnswer} onClick={callback}>
+            {answers.map((answer) => (
+                <div key={answer}>
+                    <button disabled={userAnswer} value={answer} onClick={callback}>
                         <span dangerouslySetInnerHTML={{ __html: answer }} />
                     </button>
                 </div>
