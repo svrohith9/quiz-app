@@ -70,7 +70,7 @@ const App = () => {
         </button>
       ) : null}
       {/* start of quiz */}
-      {!gameOver ? <p className="score">Score :-</p> : null}
+      {!gameOver ? <p className="score">Score :-{score}</p> : null}
       {loading ? <p>Loading ...</p> : null}
       {!loading && !gameOver && (< Question
         questionNumber={number + 1}
