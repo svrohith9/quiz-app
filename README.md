@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Please check the project live here [Quiz App](https://svrohith9.github.io/quiz-app).
+
 ## Available Scripts
 
 In the project directory, you can run:
