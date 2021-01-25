@@ -21,7 +21,9 @@ const Question: React.FC<Props> = (
         {/* {console.log(question, answers, callback, userAnswer, questionNumber, totalQuestions)} */}
         <div>
             {answers.map((answer) => (
-                <ButtonWrapper key={answer} >
+                <ButtonWrapper key={answer}
+                    correct={userAnswer?.correctAnswer === answer}
+                    userClicked={userAnswer?.answer === answer}  >
                     <button disabled={userAnswer} value={answer} onClick={callback}>
                         <span dangerouslySetInnerHTML={{ __html: answer }} />
                     </button>

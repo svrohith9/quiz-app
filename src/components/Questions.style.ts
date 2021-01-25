@@ -7,7 +7,12 @@ export const Wrapper = styled.div`
   text-align: center;
 `;
 
-export const ButtonWrapper = styled.div`
+type ButtonWrapperProps = {
+  correct: boolean;
+  userClicked: boolean;
+};
+
+export const ButtonWrapper = styled.div<ButtonWrapperProps>`
   transition: all 0.2s ease;
   :hover {
     opacity: 0.8;
@@ -18,5 +23,13 @@ export const ButtonWrapper = styled.div`
     width: 100%;
     height: 40px;
     margin: 5px 0;
+    background: ${({ correct, userClicked }) =>
+      correct
+        ? "linear-gradient(90deg, #56ffa4, #56ffa4)"
+        : !correct && userClicked
+        ? "linear-gradient(90deg, #ff6566, #c16868)"
+        : "linear-gradient(90deg, #6eafff, #6eafff)"};
+    border: 3px, solid #fff;
+    color: #fff;
   }
 `;
